@@ -1,0 +1,173 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://MainGUI.gd" type="Script" id=1]
+[ext_resource path="res://VBoxContainer.gd" type="Script" id=2]
+[ext_resource path="res://Editor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Value.gd" type="Script" id=4]
+[ext_resource path="res://PlayButton.gd" type="Script" id=5]
+[ext_resource path="res://TrackSettings.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Mixer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=8]
+
+[node name="MainGUI" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 473.0
+margin_bottom = 846.0
+script = ExtResource( 2 )
+
+[node name="OptionsButtons" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 466.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="TrackSettingsButton" type="Button" parent="VBoxContainer/OptionsButtons"]
+margin_right = 100.0
+margin_bottom = 40.0
+text = "Track settings"
+
+[node name="MixerButton" type="Button" parent="VBoxContainer/OptionsButtons"]
+margin_left = 104.0
+margin_right = 152.0
+margin_bottom = 40.0
+text = "Mixer"
+align = 2
+
+[node name="MenuButton" type="Button" parent="VBoxContainer/OptionsButtons"]
+margin_left = 156.0
+margin_right = 204.0
+margin_bottom = 40.0
+text = "Menu"
+
+[node name="ViewportContainer" type="ViewportContainer" parent="VBoxContainer"]
+margin_top = 44.0
+margin_right = 466.0
+margin_bottom = 731.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="VBoxContainer/ViewportContainer"]
+size = Vector2( 466, 687 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Editor" parent="VBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 3 )]
+
+[node name="Parameters" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 735.0
+margin_right = 466.0
+margin_bottom = 785.0
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Parameters"]
+margin_left = 60.0
+margin_top = 18.0
+margin_right = 111.0
+margin_bottom = 32.0
+text = "Velocity"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Parameters"]
+margin_left = 115.0
+margin_right = 243.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 128, 40 )
+min_value = 1.0
+max_value = 128.0
+value = 80.0
+ticks_on_borders = true
+
+[node name="Value" type="Label" parent="VBoxContainer/Parameters"]
+margin_left = 247.0
+margin_top = 18.0
+margin_right = 283.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 0 )
+text = "80"
+script = ExtResource( 4 )
+
+[node name="SelectButton" type="CheckButton" parent="VBoxContainer/Parameters"]
+margin_left = 287.0
+margin_right = 406.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+text = "Select"
+
+[node name="EditingButtons" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 789.0
+margin_right = 466.0
+margin_bottom = 839.0
+rect_min_size = Vector2( 0, 40 )
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="VBoxContainer/EditingButtons"]
+margin_left = 93.0
+margin_right = 157.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 64, 50 )
+toggle_mode = true
+text = "Play"
+script = ExtResource( 5 )
+
+[node name="BeginningButton" type="Button" parent="VBoxContainer/EditingButtons"]
+margin_left = 161.0
+margin_right = 236.0
+margin_bottom = 50.0
+text = "Beginning"
+
+[node name="PrevButton" type="Button" parent="VBoxContainer/EditingButtons"]
+margin_left = 240.0
+margin_right = 304.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 64, 0 )
+text = "Prev"
+
+[node name="NextButton" type="Button" parent="VBoxContainer/EditingButtons"]
+margin_left = 308.0
+margin_right = 372.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 64, 0 )
+text = "Next"
+
+[node name="TrackSettingsMenu" parent="." instance=ExtResource( 6 )]
+visible = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 263.0
+margin_bottom = 327.0
+
+[node name="Mixer" parent="." instance=ExtResource( 7 )]
+pause_mode = 2
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 473.0
+margin_bottom = 846.0
+
+[node name="Menu" parent="." instance=ExtResource( 8 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 473.0
+margin_bottom = 219.0
+size_flags_horizontal = 3
+[connection signal="pressed" from="VBoxContainer/OptionsButtons/TrackSettingsButton" to="VBoxContainer" method="_on_TrackSettingsButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButtons/MixerButton" to="VBoxContainer" method="_on_MixerButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButtons/MenuButton" to="VBoxContainer" method="_on_MenuButton_pressed"]
+[connection signal="value_changed" from="VBoxContainer/Parameters/HSlider" to="VBoxContainer/Parameters/Value" method="_on_HSlider_value_changed"]
+[connection signal="popup_hide" from="TrackSettingsMenu" to="VBoxContainer" method="_on_TrackSettingsMenu_popup_hide"]
+[connection signal="popup_hide" from="Mixer" to="VBoxContainer" method="_on_Mixer_popup_hide"]
+[connection signal="popup_hide" from="Menu" to="VBoxContainer" method="_on_Menu_popup_hide"]
